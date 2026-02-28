@@ -15,6 +15,7 @@ app.get("/stream", async (req, res) => {
   res.setHeader("Content-Type", "text/event-stream")
   res.setHeader("Cache-Control", "no-cache")
   res.setHeader("Connection", "keep-alive")
+  res.flushHeaders()
   
   const openRouter = new OpenRouter({
     apiKey: process.env["OPENROUTER_API_KEY"] ?? "",
@@ -34,6 +35,7 @@ app.get("/stream", async (req, res) => {
       ],
       model: "arcee-ai/trinity-large-preview:free",
       temperature: 0.7,
+      maxCompletionTokens: 250,
       stream: true,
     }
   }
@@ -43,8 +45,9 @@ app.get("/stream", async (req, res) => {
   for await (const chunk of stream) {
     // Full type information for streaming responses
     const content = chunk.choices[0]?.delta?.content;
-    res.write(content)
+    res.write(`data: ${JSON.stringify({ content })}\n\n`);
   }
+  res.write(`data: [DONE]\n\n`);
   res.end()
 })
 
