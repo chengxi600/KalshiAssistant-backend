@@ -1,10 +1,10 @@
 import { EventsApi, GetEventResponse } from "kalshi-typescript";
-import { ServiceError } from "../utils/errors";
+import { ServiceError } from "../../utils/errors";
 
 const apiInstance = new EventsApi();
 
 export async function getKalshiEvent(
-  eventTicker: string
+  eventTicker: string,
 ): Promise<GetEventResponse> {
   try {
     const response = await apiInstance.getEvent(eventTicker, false);
@@ -13,7 +13,7 @@ export async function getKalshiEvent(
       throw new ServiceError(
         "Kalshi API error",
         response.status,
-        response.statusText
+        response.statusText,
       );
     }
 

@@ -6,7 +6,7 @@ import {
 } from "@openrouter/sdk/esm/models";
 import { SendChatCompletionRequestRequest } from "@openrouter/sdk/esm/models/operations/sendchatcompletionrequest";
 import dotenv from "dotenv";
-import { ServiceError } from "../utils/errors";
+import { ServiceError } from "../../utils/errors";
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const openRouter = new OpenRouter({
 });
 
 export async function getOpenRouterResponseStream(
-  message: string
+  message: string,
 ): Promise<EventStream<ChatStreamingResponseChunk>> {
   const request: SendChatCompletionRequestRequest & {
     chatGenerationParams: { stream: true };
@@ -36,13 +36,13 @@ export async function getOpenRouterResponseStream(
     throw new ServiceError(
       "OpenRouter streaming request failed",
       502,
-      error instanceof Error ? error.message : String(error)
+      error instanceof Error ? error.message : String(error),
     );
   }
 }
 
 export async function getOpenRouterResponse(
-  message: string
+  message: string,
 ): Promise<ChatResponse> {
   const request: SendChatCompletionRequestRequest & {
     chatGenerationParams: { stream: false };
@@ -63,7 +63,7 @@ export async function getOpenRouterResponse(
     throw new ServiceError(
       "OpenRouter request failed",
       502,
-      error instanceof Error ? error.message : String(error)
+      error instanceof Error ? error.message : String(error),
     );
   }
 }
