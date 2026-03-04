@@ -23,7 +23,15 @@ export async function getOpenRouterResponseStream(
     chatGenerationParams: {
       messages: [{ role: "user", content: message }],
       reasoning: { effort: "medium" },
-      plugins: [{ id: "web", maxResults: 5 }, { id: "response-healing" }],
+      plugins: [
+        {
+          id: "web",
+          maxResults: 3,
+          searchPrompt:
+            "Retrieve recent NBA team performance data, injury reports, head-to-head results, and schedule context relevant to betting analysis. Prioritize official league and reputable sports data sources.",
+        },
+        { id: "response-healing" },
+      ],
       model: "arcee-ai/trinity-large-preview:free",
       temperature: 0.7,
       stream: true,

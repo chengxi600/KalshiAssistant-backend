@@ -71,3 +71,74 @@ export type CommonTeamRosterCoachRow = [
   coachType: string,
   sortSequence: number,
 ];
+
+export interface AdvancedBoxScoreResponse {
+  meta: Meta;
+  boxScoreAdvanced: AdvancedBoxScore;
+}
+
+export interface Meta {
+  version: number;
+  request: string;
+  time: string; // ISO timestamp
+}
+
+export interface AdvancedBoxScore {
+  gameId: string;
+  awayTeamId: number;
+  homeTeamId: number;
+  homeTeam: TeamBoxScoreAdvanced;
+  awayTeam: TeamBoxScoreAdvanced;
+}
+
+export interface TeamBoxScoreAdvanced {
+  teamId: number;
+  teamCity: string;
+  teamName: string;
+  teamTricode: string;
+  teamSlug: string;
+  players: PlayerAdvanced[];
+  statistics: TeamAdvancedStatistics;
+}
+
+export interface PlayerAdvanced {
+  personId: number;
+  firstName: string;
+  familyName: string;
+  nameI: string;
+  playerSlug: string;
+  position: string;
+  comment: string;
+  jerseyNum: string;
+  statistics: AdvancedStatsBase;
+}
+
+export type AdvancedStatsBase = {
+  minutes: string;
+  estimatedOffensiveRating: number;
+  offensiveRating: number;
+  estimatedDefensiveRating: number;
+  defensiveRating: number;
+  estimatedNetRating: number;
+  netRating: number;
+  assistPercentage: number;
+  assistToTurnover: number;
+  assistRatio: number;
+  offensiveReboundPercentage: number;
+  defensiveReboundPercentage: number;
+  reboundPercentage: number;
+  turnoverRatio: number;
+  effectiveFieldGoalPercentage: number;
+  trueShootingPercentage: number;
+  usagePercentage: number;
+  estimatedUsagePercentage: number;
+  estimatedPace: number;
+  pace: number;
+  pacePer40: number;
+  possessions: number;
+  PIE: number;
+};
+
+export type TeamAdvancedStatistics = AdvancedStatsBase & {
+  estimatedTeamTurnoverPercentage: number;
+};
